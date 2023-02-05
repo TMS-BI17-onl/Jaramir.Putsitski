@@ -34,12 +34,12 @@ BEGIN
 	RETURN @ret
 END
 --EX11
-DECLARE @currentDate datetime = DATEADD(DD, -DAY(GETDATE() -1), GETDATE())
+DECLARE @firstDay datetime = DATEADD(DD, -DAY(GETDATE() -1), GETDATE())
 SELECT
 CASE
-	WHEN DATEPART(DAY, @currentDate) = 6
-	THEN FORMAT(@currentDate + 2, 'dd.MM.yyyy')
-	WHEN DATEPART(DAY, @currentDate) = 7
-	THEN FORMAT(@currentDate + 1, 'dd.MM.yyyy')
-	ELSE FORMAT(@currentDate, 'dd.MM.yyyy')
+	WHEN DATEPART(DAY, @firstDay) = 6
+	THEN FORMAT(@firstDay + 2, 'dd.MM.yyyy')
+	WHEN DATEPART(DAY, @firstDay) = 7
+	THEN FORMAT(@firstDay + 1, 'dd.MM.yyyy')
+	ELSE FORMAT(@firstDay, 'dd.MM.yyyy')
 END AS firstBusinessDay
