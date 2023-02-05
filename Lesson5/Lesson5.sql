@@ -17,8 +17,8 @@ VALUES ('Gabrielle', 'Solis', NEWID(), 36.6, GETDATE()),
 ALTER TABLE Patients 
 ADD TempType AS 
 		CASE 
-			WHEN Temp > 37.0 THEN '> 37°C'
-			ELSE '< 37°C'
+			WHEN Temp > 37.0 THEN '> 37Â°C'
+			ELSE '< 37Â°C'
 		END
 --EX9
 CREATE VIEW vPatients AS
@@ -32,7 +32,7 @@ BEGIN
 	DECLARE @ret decimal(4,1);
 	SELECT @ret = @degrees * 9 / 5 + 32
 	RETURN @ret
-END;
+END
 --EX11
 DECLARE @currentDate datetime = DATEADD(DD, -DAY(GETDATE() -1), GETDATE())
 SELECT
