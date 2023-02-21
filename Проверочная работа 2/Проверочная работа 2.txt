@@ -1,0 +1,34 @@
+--EX1
+SELECT CONCAT(FirstName, ' ', MiddleName, ' ', LastName) AS fullName, PhoneNumber
+FROM Person.Person pr
+JOIN Person.PersonPhone ph
+ON pr.BusinessEntityID = ph.BusinessEntityID
+WHERE SUBSTRING(PhoneNumber, 1, 1) = 4 AND SUBSTRING(PhoneNumber, 3, 1) = 5
+--EX2
+SELECT BusinessEntityID, JobTitle, CASE 
+	   WHEN DATEPART(year, GETDATE()) - DATEPART(year, BirthDate) BETWEEN 17 AND 20
+	   THEN 'Adolescence'
+	   WHEN DATEPART(year, GETDATE()) - DATEPART(year, BirthDate) BETWEEN 21 AND 59
+	   THEN 'Adults'
+	   WHEN DATEPART(year, GETDATE()) - DATEPART(year, BirthDate) BETWEEN 60 AND 75
+	   THEN 'Elderly'
+	   WHEN DATEPART(year, GETDATE()) - DATEPART(year, BirthDate) BETWEEN 76 AND 90
+	   THEN 'Senile'
+	   END AS ageGroup, BirthDate
+FROM HumanResources.Employee
+--EX3
+SELECT ProductID, Name, prd.Color, StandardCost
+FROM Production.Product prd
+JOIN 
+(SELECT Color, MAX(StandardCost) as maxPrice
+FROM Production.Product
+GROUP BY Color) AS prc
+ON prd.Color = prc.Color AND prd.StandardCost = prc.maxPrice
+--EX4
+Автобусный парк
+1) Водители (driverId, firstName, lastName, dob, phoneNumber, passportNumber)
+2) Автопарк (busId, brand, model, carNumber)
+3) Маршруты (routeId, startingPoint, finalPoint, firstDeparture, lastArrival)
+4) Интервалы (headwayId, headwayTime) 
+5) Остановки (stopId, location)
+6) Расписание (driverId, busId, routeId, stopId, headwayId, arrival)
