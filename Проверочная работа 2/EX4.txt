@@ -1,0 +1,13 @@
+--EX4
+Автобусный парк
+1) Водители (driverId, firstName, lastName, dob, passportNumber, phoneNumber)
+2) Автопарк (busId, brand, model, carNumber, seats, totalCapacity, mileage)
+3) Поломки (breakdownId, busId, date, type, description)
+4) Маршруты (routeId, startingStop, finalStop, firstDeparture, lastDeparture, headway, routeLength)
+5) Смены (shiftId, driverId, startDateTime, endDateTime, breakTime)
+6) Остановки (stopId, location)
+7) Расписание (shiftId, busId, routeId, stopId, arrival, departure)
+
+Задачи:
+1) Вывести информацию об автобусах с количеством поломок за 2022 год более 6
+2) Вывести ФИО всех водителей, работавших вчера на ночных маршрутах (00:00 - 06:00)
