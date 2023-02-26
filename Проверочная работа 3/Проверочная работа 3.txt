@@ -1,0 +1,19 @@
+--EX2
+--1)
+SELECT *
+FROM (SELECT id_тура, отели.класс_отеля AS Класс, MONTH(дата_начала_тура) AS startMonth, MONTH(дата_окончания_тура) AS endMonth, DATEDIFF(month, дата_начала_тура, дата_окончания_тура) AS duration
+	  FROM FctТуры туры
+	  JOIN DimОтели отели
+	  ON туры.id_отеля = отели.id_отеля
+	  WHERE startMonth IN (6, 7, 8) OR endMonth IN (6, 7, 8)) AS sourceTable
+PIVOT
+(COUNT(id_тура) FOR duration IN (1, 2, 3)) AS pivotTable
+ORDER BY Класс
+--2)
+SELECT CONCAT(имя_туриста, фамилия_туриста), туры.цена_тура * скидки.процент_скидки AS скидка
+FROM DimТуристы туристы
+LEFT JOIN FctТуры туры
+ON туристы.id_туристы = туры.id_туристы
+LEFT JOIN DimСкидки скидки
+ON туры.id_скидки = скидки.id_скидки
+ORDER BY скидка DESC
