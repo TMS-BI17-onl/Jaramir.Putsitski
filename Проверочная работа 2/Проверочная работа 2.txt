@@ -32,3 +32,5 @@ ON prd.Color = prc.Color AND prd.StandardCost = prc.maxPrice
 4) Интервалы (headwayId, headwayTime) 
 5) Остановки (stopId, location)
 6) Расписание (driverId, busId, routeId, stopId, headwayId, arrival)
+
+Mark: 9
