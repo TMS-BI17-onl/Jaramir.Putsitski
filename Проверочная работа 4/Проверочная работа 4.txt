@@ -1,0 +1,29 @@
+--EX1
+INSERT INTO manufacturer (name, country_id)
+VALUES ('HP', (SELECT id FROM country WHERE name = 'Америка'))
+--EX2
+UPDATE user
+SET age = FLOOR(age / 3)
+WHERE name = 'Андрей'
+--EX3
+SELECT name
+FROM product
+WHERE price = (SELECT MAX(price)
+		   FROM product)
+
+SELECT TOP 1 WITH TIES name
+FROM product
+ORDER BY price DESC
+--EX4
+SELECT * 
+FROM user AS u
+LEFT JOIN phone p
+ON u.id = p.user_id
+WHERE (SUBSTRING(p.name, 2, 1) = 3 AND RIGHT(p.name, 1) = 4) OR u.age > 35
+--EX5
+SELECT TOP 5 COUNT(o.id) AS numberOfOrders, o.user_id, u.name
+FROM order AS o
+JOIN user AS u
+ON o.user_id = u.id
+GROUP BY o.user_id
+ORDER BY numberOfOrders DESC;
