@@ -26,4 +26,4 @@ FROM order AS o
 JOIN user AS u
 ON o.user_id = u.id
 GROUP BY o.user_id
-ORDER BY numberOfOrders DESC;
+ORDER BY numberOfOrders DESC
