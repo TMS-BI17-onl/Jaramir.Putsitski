@@ -1,0 +1,26 @@
+--EX1
+CREATE VIEW teachers_rating
+AS
+WITH tab AS 
+(SELECT teacher_id, DATE, lessons, CASE WHEN lessons >= 4 THEN 3 WHEN lessons >= 2 AND lessons < 4 THEN 2 ELSE 1 END AS score */поменял границы для начисления баллов, т.к в моей таблице число уроков, проведенных за день, не превышало 5*/
+FROM
+(SELECT DISTINCT teacher_id, CONVERT(DATE, date_time) AS DATE, COUNT(id) OVER (PARTITION BY teacher_id, CONVERT(DATE, date_time)) AS lessons
+FROM fct_timetable) AS t)
+SELECT DISTINCT TOP 50 WITH TIES teacher_id, CONCAT(teach.name, ' ', teach.last_name) AS name, SUM(score) OVER (PARTITION BY teacher_id) AS rating
+FROM tab
+JOIN dim_teachers teach ON tab.teacher_id = teach.id
+ORDER BY rating DESC
+
+--EX2
+Предложения по улучшению графиков:
+a) - поменять фон на нейтральный, например белый
+- убрать подписи под столбиками, либо легенду справа от них
+- убрать тень
+- убрать подпись вертикальной шкалы (Number of Calories), т.к. из названия графика и так понятно, что отображено по вертикали
+b) -сделать 2д столбики
+- поменять форму столбиков
+- убрать градиент
+- единицы измерения указать в отметках на шкале, вместо заголовка (in billions)
+c) - подписи стобликов сделать горизонтальными
+- сократить заголовок
+- изменить начальную точку графика, т.к. сейчас все столбики выглядят одинаково
