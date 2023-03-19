@@ -1,0 +1,43 @@
+--EX1
+SELECT ProductSubcategoryID
+FROM Production.Product
+WHERE Weight > 150
+--EX2
+SELECT TOP 1 WITH TIES *
+FROM Production.Product
+ORDER BY StandardCost DESC
+
+SELECT *
+FROM Production.Product
+WHERE StandardCost = (SELECT MAX(StandardCost) FROM Production.Product)
+
+SELECT *
+FROM
+(SELECT *, RANK() OVER (ORDER BY StandardCost DESC) AS rnk
+FROM Production.Product) AS r
+WHERE rnk = 1
+
+SELECT *
+FROM
+(SELECT *, MAX(StandardCost) OVER () AS maxPrice
+FROM Production.Product) AS r
+WHERE StandardCost = maxPrice
+--EX3
+SELECT ID_customer
+FROM DimCustomers
+EXCEPT 
+SELECT ID_customer
+FROM FctOrders
+WHERE RentDate > DATEADD(year, -1, GETDATE())
+--EX4
+SELECT Employee_number, COUNT(ID_maintenance) as repairs
+FROM FctMaintenance
+WHERE Start_date > DATEADD(year, -5, GETDATE())
+GROUP BY Employee_number
+--EX5
+SELECT category, COUNT(n.id) AS cnt
+FROM Notifications AS n
+JOIN Users AS u ON n.user_id = u.id
+WHERE u.email = 'alex@gmail.com' AND n.is_read = FALSE
+GROUP BY category
+HAVING COUNT(n.id) > 50
