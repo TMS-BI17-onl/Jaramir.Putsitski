@@ -1,0 +1,23 @@
+Well done!
+
+4.
+-1
+In the subquery avgsalary was already calculated as one number. We can't divide it after that by group by. AVG (3, 3, 3) = 3
+
+5.
+-0.5
+You'll skip those people who is working in the same department after 10 years, 'cause their end date will be null.
+
+6.
+Probably, the better (and more common) will be next solution:
+SELECT first_name, last_name, salary
+FROM 
+(
+SELECT First_name, last_name, salary, DENSE_RANK() OVER (ORDER BY salary DESC) as top
+FROM Employees 
+) t
+WHERE top BETWEEN 5 AND 10
+
+
+Mark: 9
+
